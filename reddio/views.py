@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from reddio.models import User, Contract, ContractTxns
 # Create your views here.
+from django.db.models import Q
 
 
 def home(request):
@@ -17,23 +18,25 @@ def home(request):
 
     context = {
         'latestTxns': txns,
-        'userAccounts':accounts,
-        'txn_count':txnCount,
-        'user_count':userCount,
-        'contract_count':contractCount
+        'userAccounts': accounts,
+        'txn_count': txnCount,
+        'user_count': userCount,
+        'contract_count': contractCount
     }
 
-    return render(request, "reddio/index.html",context)
-    
+    return render(request, "reddio/index.html", context)
+
+
 def search_contract(request):
     search_item = request.POST.get('search-field')
     isPresent = False
-    obj={}
+    obj = {}
     obj2 = {}
-    if(Contract.objects.filter(contract_address=search_item).count() != 0):
+    if (Contract.objects.filter(contract_address=search_item).count() != 0):
         isPresent = True
         obj = Contract.objects.get(contract_address=search_item)
-        obj2 = ContractTxns.objects.filter(contract_address=search_item).order_by('-timestamp').values()
+        obj2 = ContractTxns.objects.filter(
+            contract_address=search_item).order_by('-timestamp').values()
 
     context = {
         'isPresent': isPresent,
@@ -41,5 +44,19 @@ def search_contract(request):
         'contract_txns': obj2
     }
 
-
     return render(request, "reddio/contract.html", context)
+
+
+def user_data(request, pk):
+
+    user_ = User.objects.get(stark_key=pk)
+
+    txn = ContractTxns.objects.filter(fromAddr=user_) | ContractTxns.objects.filter(toAddr=user_)
+
+    context = {
+        'userTxns': txn.values(),
+        'userTxnCount': txn.count(),
+        'userAddress': pk
+    }
+
+    return render(request, "reddio/user.html", context)
