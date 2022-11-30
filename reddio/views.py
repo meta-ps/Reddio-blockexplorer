@@ -18,7 +18,6 @@ def home(request):
     context = {
         'latestTxns': txns,
         'userAccounts':accounts,
-        'contracts':contracts,
         'txn_count':txnCount,
         'user_count':userCount,
         'contract_count':contractCount
