@@ -8,7 +8,9 @@ def home(request):
     # get latest 10 txns
     # get 10 users
     # get 10 contracts list
-
+    txnCount = ContractTxns.objects.all().count()
+    userCount = User.objects.all().count()
+    contractCount = Contract.objects.all().count()
     txns = ContractTxns.objects.all().order_by('-timestamp').values()[:15]
     accounts = User.objects.all().values()[:15]
     contracts = Contract.objects.all().values()[:10]
@@ -16,7 +18,10 @@ def home(request):
     context = {
         'latestTxns': txns,
         'userAccounts':accounts,
-        'contracts':contracts
+        'contracts':contracts,
+        'txn_count':txnCount,
+        'user_count':userCount,
+        'contract_count':contractCount
     }
 
     return render(request, "reddio/index.html",context)
