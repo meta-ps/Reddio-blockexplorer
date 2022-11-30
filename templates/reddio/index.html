@@ -1,12 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>reddio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
+
 <body>
-    Hello
+
+    <div>
+        Dashboard
+    </div>
+
+
+    <div class="p-10">
+        <div class="border-4 border-sky-500 ">
+            Latest Transactions
+            {% for i in latestTxns %}
+            <br />
+            contract address: {{i.contract_address_id}} <br />
+            timestamp: {{i.timestamp}} <br />
+            <div>
+                {% if i.record_type == 1 %}
+                MintRecordType
+                {% elif i.record_type == 2 %}
+                MintRecordType
+                {% elif i.record_type == 3 %}
+                TransferFromRecordType
+                {% elif i.record_type == 4 %}
+                WithdrawRecordType
+                {% elif i.record_type == 7 %}
+                ASKOrderRecordType
+                {% elif i.record_type == 8 %}
+                BIDOrderRecordType
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+    <div class="p-10">
+        <div class="border-4 border-sky-500 ">
+            User Accounts
+            {% for i in userAccounts %}
+            <br />
+            user public address: {{i.stark_key}} <br />
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+    <div class="p-10">
+        <div class="border-4 border-sky-500 ">
+            User Accounts
+            {% for i in userAccounts %}
+            <br />
+            user public address: {{i.stark_key}} <br />
+            {% endfor %}
+        </div>  
+    </div>
+
+
+    <div class="p-10">
+        <div class="border-4 border-sky-500 ">
+            Contract List
+            {% for i in contracts %}
+            <br />
+            contract address: {{i.contract_address}} <br />
+            Contract name: {{i.name}} <br />
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <div>
+
+    </div>
+
+
+    <script>
+        function timeConverter(UNIX_timestamp) {
+            var a = new Date(UNIX_timestamp * 1000);
+            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+            var year = a.getFullYear();
+            var month = months[a.getMonth()];
+            var date = a.getDate();
+            var hour = a.getHours();
+            var min = a.getMinutes();
+            var sec = a.getSeconds();
+            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
+            return time + " ";
+        }
+
+    </script>
+
 </body>
+
+
 </html>
