@@ -40,7 +40,10 @@ class ContractTxns(models.Model):
         WithdrawRecordType = 4, _('WithdrawRecordType')
         ASKOrderRecordType = 7, _('ASKOrderRecordType')
         BIDOrderRecordType = 8, _('BIDOrderRecordType')
-    
+        #7 TakerAsk - sells the NFT for the ERC-20 token
+        #8 MakerBid - user wishes to acquire a NFT using a specific ERC-20 token.
+
+
     class RecordStatusType(models.TextChoices):
         DEFAULT = 0, _('DEFAULT')
         Submitted = 1, _('Submitted')
@@ -48,11 +51,15 @@ class ContractTxns(models.Model):
         Failed = 3, _('Failed')
         Proved = 4, _('Proved')
         ProvedError = 5, _('ProvedError')
-
-    assest_id = models.CharField(max_length=255, null=True, blank=True)
+    
+    asset_id = models.CharField(max_length=255, null=True, blank=True)
+    assest_name = models.CharField(max_length=255, null=True, blank=True)
     record_type = models.IntegerField(
         default=RecordType.DEFAULT, choices=RecordType.choices)
+    
+    display_value = models.CharField(max_length=255, null=True, blank=True)
     timestamp = models.BigIntegerField()
+    amount = models.CharField(max_length=255, null=True, blank=True)
     record_status = models.IntegerField(
         default=RecordStatusType.DEFAULT, choices=RecordStatusType.choices)
     base_asset_id = models.CharField(max_length=255, null=True, blank=True)
@@ -69,3 +76,5 @@ class ContractTxns(models.Model):
     quote_contract_address = models.CharField(
         max_length=255, null=True, blank=True)
     token_id = models.CharField(max_length=255, null=True, blank=True)
+    fromAddr = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fromAddress', null=True)
+    toAddr = models.ForeignKey(User, on_delete=models.CASCADE,related_name='toAddress', null=True)
