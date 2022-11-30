@@ -19,7 +19,23 @@ def home(request):
         'contracts':contracts
     }
 
-
-
     return render(request, "reddio/index.html",context)
     
+def search_contract(request):
+    search_item = request.POST.get('search-field')
+    isPresent = False
+    obj={}
+    obj2 = {}
+    if(Contract.objects.filter(contract_address=search_item).count() != 0):
+        isPresent = True
+        obj = Contract.objects.get(contract_address=search_item)
+        obj2 = ContractTxns.objects.filter(contract_address=search_item).order_by('-timestamp').values()
+
+    context = {
+        'isPresent': isPresent,
+        'contract': obj,
+        'contract_txns': obj2
+    }
+
+
+    return render(request, "reddio/contract.html", context)

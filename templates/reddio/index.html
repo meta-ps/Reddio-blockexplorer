@@ -16,6 +16,18 @@
         Dashboard
     </div>
 
+    <div>
+        <div>Search
+            <div>
+                <form action="{% url 'search_contract' %}" method="POST">
+
+                    {% csrf_token %}
+                    Address: <input type="text" name="search-field" /> <input type="submit" value="Search">
+
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="p-10">
         <div class="border-4 border-sky-500 ">
@@ -55,18 +67,6 @@
     </div>
 
 
-
-    <div class="p-10">
-        <div class="border-4 border-sky-500 ">
-            User Accounts
-            {% for i in userAccounts %}
-            <br />
-            user public address: {{i.stark_key}} <br />
-            {% endfor %}
-        </div>  
-    </div>
-
-
     <div class="p-10">
         <div class="border-4 border-sky-500 ">
             Contract List
@@ -90,23 +90,6 @@
     <div>
 
     </div>
-
-
-    <script>
-        function timeConverter(UNIX_timestamp) {
-            var a = new Date(UNIX_timestamp * 1000);
-            var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            var year = a.getFullYear();
-            var month = months[a.getMonth()];
-            var date = a.getDate();
-            var hour = a.getHours();
-            var min = a.getMinutes();
-            var sec = a.getSeconds();
-            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec;
-            return time + " ";
-        }
-
-    </script>
 
 </body>
 

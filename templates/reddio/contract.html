@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+
+    {% if isPresent %}
+
+    <div>
+        {% if contract.name %}
+        {{contract.name}}
+        {% endif %}
+        <br />
+        {% if contract.contract_address %}
+        {{contract.contract_address}}
+        {% endif %}
+        <br />
+        {% if contract.symbol %}
+        {{contract.symbol}}
+        {% endif %}
+        <br />
+        {% if contract.contract_type == "NONE" %}
+
+        {% else %}
+        {{contract.contract_type}}
+        {% endif %}
+        <br />
+    </div>
+    <div>
+
+        contract history:
+
+        <div>
+            {% for i in contract_txns %}
+            contract Addr: {{i.contract_address_id}}
+            record type:    
+            {% if i.record_type == 1 %}
+            MintRecordType
+            {% elif i.record_type == 2 %}
+            MintRecordType
+            {% elif i.record_type == 3 %}
+            TransferFromRecordType
+            {% elif i.record_type == 4 %}
+            WithdrawRecordType
+            {% elif i.record_type == 7 %}
+            ASKOrderRecordType
+            {% elif i.record_type == 8 %}
+            BIDOrderRecordType
+            {% endif %}
+
+            {{i.timestamp}}
+
+            {{i.record_status}}
+
+            <br />
+            {% endfor %}
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+    {% else %}
+    Contract Not Present
+    {% endif %}
+</body>
+
+</html>

@@ -43,7 +43,7 @@ class ContractTxns(models.Model):
         #7 TakerAsk - sells the NFT for the ERC-20 token
         #8 MakerBid - user wishes to acquire a NFT using a specific ERC-20 token.
 
-
+    
     class RecordStatusType(models.TextChoices):
         DEFAULT = 0, _('DEFAULT')
         Submitted = 1, _('Submitted')
