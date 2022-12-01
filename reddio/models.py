@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from unixtimestampfield.fields import UnixTimeStampField
 
 # Create your models here.
 # class User(models.Model):
@@ -58,7 +59,7 @@ class ContractTxns(models.Model):
         default=RecordType.DEFAULT, choices=RecordType.choices)
     
     display_value = models.CharField(max_length=255, null=True, blank=True)
-    timestamp = models.BigIntegerField()
+    timestamp = UnixTimeStampField(use_numeric=True, default=0.0)
     amount = models.CharField(max_length=255, null=True, blank=True)
     record_status = models.IntegerField(
         default=RecordStatusType.DEFAULT, choices=RecordStatusType.choices)

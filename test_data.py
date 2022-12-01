@@ -74,7 +74,7 @@ else:
     RECORD_BASE_API_URI = "https://api.reddio.com/v1/records?stark_key="
     keys_length = len(my_data['stark_keys'])
 
-keys_length = len(my_data['stark_keys'])
+# keys_length = len(my_data['stark_keys'])
 
 
 def handleDepositWithdrawRecord(data):
@@ -263,70 +263,3 @@ print(x)
 print(y)
 
 
-# user = UserWallet()
-# user.walletAddress = "0x9E08a574A85b0882e3B91db13de7854aE19B97A1"
-# user.save()
-
-# print("One User Added " + str(UserWallet.objects.all().count() == 1))
-
-
-# quizz_1 = Quizz(quiz_name="Polygon Guild", user=user)
-# quizz_1.save()
-
-# question_1 = Question(question_text="Polygon Works on ?", quizz=quizz_1)
-# question_1.save()
-
-# Answer.objects.create(choice="Layer 1", is_correct=False, question=question_1)
-# Answer.objects.create(choice="Layer 2", is_correct=True, question=question_1)
-# Answer.objects.create(choice="Layer 3", is_correct=False, question=question_1)
-# Answer.objects.create(choice="Layer 4", is_correct=False, question=question_1)
-
-# question_2 = Question(
-#     question_text="Is Polygon decentralized ?", quizz=quizz_1)
-# question_2.save()
-
-# Answer.objects.create(choice="Layer 1", is_correct=False, question=question_2)
-# Answer.objects.create(choice="Layer 2", is_correct=True, question=question_2)
-
-# # Quizz 2
-# quizz_2 = Quizz(quiz_name="Polygon Guild Mumbai", user=user)
-# quizz_2.save()
-
-# question_1 = Question(question_text="ICO Full Form ?", quizz=quizz_2)
-# question_1.save()
-
-# Answer.objects.create(choice="Initial Coin Offering",
-#                       is_correct=True, question=question_1)
-# Answer.objects.create(choice="Initial Coin not Offering 2",
-#                       is_correct=False, question=question_1)
-# Answer.objects.create(choice="Initial Coin not Offering 3",
-#                       is_correct=False, question=question_1)
-# Answer.objects.create(choice="Initial Coin not Offering 3",
-#                       is_correct=False, question=question_1)
-
-# question_2 = Question(question_text="DAO Stands For ?", quizz=quizz_2)
-# question_2.save()
-
-# Answer.objects.create(choice="De Au org", is_correct=True, question=question_2)
-# Answer.objects.create(choice="DDAS", is_correct=False, question=question_2)
-
-
-# # Case 1 List all quizz Names done by user
-
-# user = UserWallet.objects.get(walletAddress = "0x9E08a574A85b0882e3B91db13de7854aE19B97A1")
-# allQuizzes = Quizz.objects.filter(user=user)
-# print(allQuizzes)
-
-# # Case 2 List all questions done by only quizz one
-# quizz = Quizz.objects.get(id=1)
-# questions = Question.objects.filter(quizz = quizz)
-# print('All questions in a quizz')
-# print(questions)
-# quid = Question.objects.filter(quizz = quizz)[0]
-# xx = Answer.objects.filter(question=quid)
-# print(xx)
-
-# quizz = Quizz.objects.get(id=2)
-# quid2 = Question.objects.filter(quizz = quizz)[1]
-# xx = Answer.objects.filter(question=quid2)
-# print(xx)
