@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-!453d48=7!&dl!^^68$-%c4j2dewtu&wh@nr)i+=dd1mh**v4a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://reddioexplorer.pythonanywhere.com/','reddioexplorer.pythonanywhere.com', '*']
 
 
 # Application definition
