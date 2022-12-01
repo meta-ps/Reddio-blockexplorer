@@ -12,9 +12,9 @@ def home(request):
     txnCount = ContractTxns.objects.all().count()
     userCount = User.objects.all().count()
     contractCount = Contract.objects.all().count()
-    txns = ContractTxns.objects.all().order_by('-timestamp').values()[:15]
+    txns = ContractTxns.objects.exclude(contract_address="eth").all().order_by('-timestamp').values()[:15]
     accounts = User.objects.all().values()[:10]
-    contracts = Contract.objects.all().values()[:10]
+
 
     context = {
         'latestTxns': txns,
