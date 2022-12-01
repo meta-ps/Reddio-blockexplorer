@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load unixtimestampfield %}
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
 
 
-    User 
-    User: {{userAddress}}<br/>
-    Txn Count: {{userTxnCount}} <br/>
-    
+    User
+    User: {{userAddress}}<br />
+    Txn Count: {{userTxnCount}} <br />
+
 
     <div>
         {% for i in userTxns %}
-            {{i}} <br/><br/>
+
+        {{i.id}}<br/>
+        {{i.assest_name}}<br/>
+        {{i.record_type}}<br/>
+        {{i.token_id}}<br/>
+        {{i.timestamp}}<br/>
+        {{ i.timestamp | to_datetime }}<br/>
+        <br/>
         {% endfor %}
     </div>
-    
+
 </body>
+
 </html>

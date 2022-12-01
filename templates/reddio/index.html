@@ -41,7 +41,7 @@
             {% for i in latestTxns %}
             <br />
             contract address: {{i.contract_address_id}} <br />
-            timestamp: {{i.timestamp }} <br />
+            timestamp: {{i.timestamp | to_timestamp }} <br />
             {{ i.timestamp | to_datetime }}
 
             <div>

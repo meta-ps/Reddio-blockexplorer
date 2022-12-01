@@ -5,7 +5,7 @@ from django.db.models import Q
 
 
 def home(request):
-    # mydata = Members.objects.all().order_by('-firstname').values()
+
     # get latest 10 txns
     # get 10 users
     # get 10 contracts list
@@ -51,7 +51,8 @@ def user_data(request, pk):
 
     user_ = User.objects.get(stark_key=pk)
 
-    txn = ContractTxns.objects.filter(fromAddr=user_) | ContractTxns.objects.filter(toAddr=user_)
+    txn = ContractTxns.objects.filter(fromAddr=user_).order_by(
+        '-timestamp') | ContractTxns.objects.filter(toAddr=user_).order_by('-timestamp')
 
     context = {
         'userTxns': txn.values(),
