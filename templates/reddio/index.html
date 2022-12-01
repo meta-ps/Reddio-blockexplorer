@@ -35,47 +35,50 @@
         </div>
     </div>
 
-    <div class="p-10">
-        <div class="border-4 border-sky-500 ">
-            Latest Transactions
-            {% for i in latestTxns %}
-            <br />
-            contract address: {{i.contract_address_id}} <br />
-            timestamp: {{i.timestamp | to_timestamp }} <br />
-            {{ i.timestamp | to_datetime }}
 
-            <div>
-                {% if i.record_type == 1 %}
-                MintRecordType
-                {% elif i.record_type == 2 %}
-                MintRecordType
-                {% elif i.record_type == 3 %}
-                TransferFromRecordType
-                {% elif i.record_type == 4 %}
-                WithdrawRecordType
-                {% elif i.record_type == 7 %}
-                ASKOrderRecordType
-                {% elif i.record_type == 8 %}
-                BIDOrderRecordType
-                {% endif %}
+
+    <div>
+        <div>
+            <div class="grid grid-cols-2 gap-1">
+                <div class="">
+                    Latest Transactions
+                    {% for i in latestTxns %}
+                    <br />
+                    contract address: {{i.contract_address_id}} <br />
+                    timestamp: {{i.timestamp | to_timestamp }} <br />
+                    {{ i.timestamp | to_datetime }}
+
+                    <div>
+                        {% if i.record_type == 1 %}
+                        MintRecordType
+                        {% elif i.record_type == 2 %}
+                        MintRecordType
+                        {% elif i.record_type == 3 %}
+                        TransferFromRecordType
+                        {% elif i.record_type == 4 %}
+                        WithdrawRecordType
+                        {% elif i.record_type == 7 %}
+                        ASKOrderRecordType
+                        {% elif i.record_type == 8 %}
+                        BIDOrderRecordType
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="">
+                    <div>
+                        User Accounts
+                        {% for i in userAccounts %}
+                        <br />
+                        user public address: <a href="/user/{{i.stark_key}}">{{i.stark_key}}</a> <br />
+                        {% endfor %}
+                    </div>
+
+                </div>
             </div>
-            {% endfor %}
+
         </div>
     </div>
-
-
-    <div class="p-10">
-        <div class="border-4 border-sky-500 ">
-            User Accounts
-            {% for i in userAccounts %}
-            <br />
-            user public address: <a href="/user/{{i.stark_key}}">{{i.stark_key}}</a> <br />
-            {% endfor %}
-        </div>
-    </div>
-
-
-
 
 
 
