@@ -14,71 +14,526 @@
 <body>
 
     <div>
-        Dashboard
-    </div>
-    <div>
-        TXN COunt: {{txn_count}}<br />
-        Users COunt: {{user_count}}<br />
-        Contract COunt: {{contract_count}}<br />
-    </div>
 
-    <div>
-        <div>Search
-            <div>
-                <form action="{% url 'search_contract' %}" method="POST">
-
-                    {% csrf_token %}
-                    Address: <input type="text" name="search-field" /> <input type="submit" value="Search">
-
-                </form>
-            </div>
-        </div>
-    </div>
-
-
-
-    <div>
         <div>
-            <div class="grid grid-cols-2 gap-1">
-                <div class="">
-                    Latest Transactions
-                    {% for i in latestTxns %}
-                    <br />
-                    contract address: {{i.contract_address_id}} <br />
-                    timestamp: {{i.timestamp | to_timestamp }} <br />
-                    {{ i.timestamp | to_datetime }}
+            <div>
+                <div>
 
                     <div>
-                        {% if i.record_type == 1 %}
-                        MintRecordType
-                        {% elif i.record_type == 2 %}
-                        MintRecordType
-                        {% elif i.record_type == 3 %}
-                        TransferFromRecordType
-                        {% elif i.record_type == 4 %}
-                        WithdrawRecordType
-                        {% elif i.record_type == 7 %}
-                        ASKOrderRecordType
-                        {% elif i.record_type == 8 %}
-                        BIDOrderRecordType
-                        {% endif %}
+
+                        <div>
+
+                            <nav class="flex justify-between px-20 py-10 items-center bg-white">
+                                <h1 class="text-xl text-gray-800 font-bold">Reddio BlockExplorer</h1>
+                                <div class="flex items-center">
+                                    <div class="flex items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 pt-0.5 text-gray-600"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                        </svg>
+                                        <input class="ml-2 outline-none bg-transparent font-" type="text" name="search"
+                                            id="search" placeholder="Search..." />
+                                    </div>
+                                    <ul class="flex items-center space-x-6">
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path d="M12 14l9-5-9-5-9 5 9 5z" />
+                                                <path
+                                                    d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5l4-2.222" />
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                                            </svg>
+                                        </li>
+                                        <li>
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                                            </svg>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+
+                        <div>
+                            <div>
+                                <div class="flex items-center justify-center">
+                                    <div class="flex border-2 rounded">
+                                        <input type="text" class="px-4 py-2 w-80" placeholder="Search...">
+                                        <button class="flex items-center justify-center px-4 border-l">
+                                            <svg class="w-6 h-6 text-gray-600" fill="currentColor"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                                <path
+                                                    d="M16.32 14.9l5.39 5.4a1 1 0 0 1-1.42 1.4l-5.38-5.38a8 8 0 1 1 1.41-1.41zM10 16a6 6 0 1 0 0-12 6 6 0 0 0 0 12z" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div>
+                            <div>
+                                <div class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                                    <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <span
+                                                    class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{txn_count}}</span>
+                                                <h3 class="text-base font-normal text-gray-500">Txn Count</h3>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <span
+                                                    class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{user_count}}</span>
+                                                <h3 class="text-base font-normal text-gray-500">User Count</h3>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                                        <div class="flex items-center">
+                                            <div class="flex-shrink-0">
+                                                <span
+                                                    class="text-2xl sm:text-3xl leading-none font-bold text-gray-900">{{contract_count}}</span>
+                                                <h3 class="text-base font-normal text-gray-500">Contract Count</h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex overflow-hidden bg-white pt-16">
+
+                            <div id="main-content" class="h-full w-full bg-gray-50">
+                                <main>
+                                    <div class="pt-6 px-4">
+                                        <div class="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
+                                            <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+                                                <div class="flex items-center justify-between mb-4">
+                                                </div>
+                                                <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                                                    <div class="mb-4 flex items-center justify-between">
+                                                        <div>
+                                                            <h3 class="text-xl font-bold text-gray-900 mb-2">Latest
+                                                                Transactions</h3>
+                                                            <span class="text-base font-normal text-gray-500">This is a
+                                                                list of latest transactions</span>
+                                                        </div>
+                                                        <div class="flex-shrink-0">
+                                                            <a href="#"
+                                                                class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">View
+                                                                all</a>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex flex-col mt-8">
+                                                        <div class="overflow-x-auto rounded-lg">
+                                                            <div class="align-middle inline-block min-w-full">
+                                                                <div class="shadow overflow-hidden sm:rounded-lg">
+                                                                    <table class="min-w-full divide-y divide-gray-200">
+                                                                        <thead class="bg-gray-50">
+                                                                            <tr>
+                                                                                <th scope="col"
+                                                                                    class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                                    Transaction
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                                    Date & Time
+                                                                                </th>
+                                                                                <th scope="col"
+                                                                                    class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                                    Amount
+                                                                                </th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody class="bg-white">
+                                                                            <tr>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                    Payment from <span
+                                                                                        class="font-semibold">Bonnie
+                                                                                        Green</span>
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                    Apr 23 ,2021
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                    $2300
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr class="bg-gray-50">
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
+                                                                                    Payment refund to <span
+                                                                                        class="font-semibold">#00910</span>
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                    Apr 23 ,2021
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                    -$670
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                    Payment failed from <span
+                                                                                        class="font-semibold">#087651</span>
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                    Apr 18 ,2021
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                    $234
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr class="bg-gray-50">
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
+                                                                                    Payment from <span
+                                                                                        class="font-semibold">Lana
+                                                                                        Byrd</span>
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                    Apr 15 ,2021
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                    $5000
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                    Payment from <span
+                                                                                        class="font-semibold">Jese
+                                                                                        Leos</span>
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                    Apr 15 ,2021
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                    $2300
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr class="bg-gray-50">
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
+                                                                                    Payment from <span
+                                                                                        class="font-semibold">THEMESBERG
+                                                                                        LLC</span>
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                    Apr 11 ,2021
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                    $560
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                    Payment from <span
+                                                                                        class="font-semibold">Lana
+                                                                                        Lysle</span>
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                    Apr 6 ,2021
+                                                                                </td>
+                                                                                <td
+                                                                                    class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                    $1437
+                                                                                </td>
+                                                                            </tr>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div
+                                                class="mt-4 w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4">
+
+
+                                                <div
+                                                    class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+                                                    <div class="flex items-center justify-between mb-4">
+                                                    </div>
+                                                    <div class="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                                                        <div class="mb-4 flex items-center justify-between">
+                                                            <div>
+                                                                <h3 class="text-xl font-bold text-gray-900 mb-2">Latest
+                                                                    Transactions</h3>
+                                                                <span class="text-base font-normal text-gray-500">This
+                                                                    is a
+                                                                    list of latest transactions</span>
+                                                            </div>
+                                                            <div class="flex-shrink-0">
+                                                                <a href="#"
+                                                                    class="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2">View
+                                                                    all</a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex flex-col mt-8">
+                                                            <div class="overflow-x-auto rounded-lg">
+                                                                <div class="align-middle inline-block min-w-full">
+                                                                    <div class="shadow overflow-hidden sm:rounded-lg">
+                                                                        <table
+                                                                            class="min-w-full divide-y divide-gray-200">
+                                                                            <thead class="bg-gray-50">
+                                                                                <tr>
+                                                                                    <th scope="col"
+                                                                                        class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                                        Transaction
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                                        Date & Time
+                                                                                    </th>
+                                                                                    <th scope="col"
+                                                                                        class="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                                                        Amount
+                                                                                    </th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody class="bg-white">
+                                                                                <tr>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                        Payment from <span
+                                                                                            class="font-semibold">Bonnie
+                                                                                            Green</span>
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                        Apr 23 ,2021
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                        $2300
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="bg-gray-50">
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
+                                                                                        Payment refund to <span
+                                                                                            class="font-semibold">#00910</span>
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                        Apr 23 ,2021
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                        -$670
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                        Payment failed from <span
+                                                                                            class="font-semibold">#087651</span>
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                        Apr 18 ,2021
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                        $234
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="bg-gray-50">
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
+                                                                                        Payment from <span
+                                                                                            class="font-semibold">Lana
+                                                                                            Byrd</span>
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                        Apr 15 ,2021
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                        $5000
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                        Payment from <span
+                                                                                            class="font-semibold">Jese
+                                                                                            Leos</span>
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                        Apr 15 ,2021
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                        $2300
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr class="bg-gray-50">
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
+                                                                                        Payment from <span
+                                                                                            class="font-semibold">THEMESBERG
+                                                                                            LLC</span>
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                        Apr 11 ,2021
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                        $560
+                                                                                    </td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                                                                        Payment from <span
+                                                                                            class="font-semibold">Lana
+                                                                                            Lysle</span>
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                                                                        Apr 6 ,2021
+                                                                                    </td>
+                                                                                    <td
+                                                                                        class="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                                                                        $1437
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                </main>
+
+                                <script async defer src="https://buttons.github.io/buttons.js"></script>
+                                <script src="https://demo.themesberg.com/windster/app.bundle.js"></script>
+                            </div>
+                        </div>
                     </div>
-                    {% endfor %}
                 </div>
-                <div class="">
+
+
+
+                <div>
+
                     <div>
-                        User Accounts
-                        {% for i in userAccounts %}
-                        <br />
-                        user public address: <a href="/user/{{i.stark_key}}">{{i.stark_key}}</a> <br />
-                        {% endfor %}
+                        Dashboard
+                    </div>
+                    <div>
+                        TXN COunt: {{txn_count}}<br />
+                        Users COunt: {{user_count}}<br />
+                        Contract COunt: {{contract_count}}<br />
                     </div>
 
-                </div>
-            </div>
+                    <div>
+                        <div>Search
+                            <div>
+                                <form action="{% url 'search_contract' %}" method="POST">
 
-        </div>
-    </div>
+                                    {% csrf_token %}
+                                    Address: <input type="text" name="search-field" /> <input type="submit"
+                                        value="Search">
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div>
+                        <div>
+                            <div class="grid grid-cols-2 gap-1">
+                                <div class="">
+
+
+                                    Latest Transactions
+                                    {% for i in latestTxns %}
+                                    <br />
+                                    contract address: {{i.contract_address_id}} <br />
+                                    timestamp: {{i.timestamp | to_timestamp }} <br />
+                                    {{ i.timestamp | to_datetime }}
+
+                                    <div>
+                                        {% if i.record_type == 1 %}
+                                        MintRecordType
+                                        {% elif i.record_type == 2 %}
+                                        MintRecordType
+                                        {% elif i.record_type == 3 %}
+                                        TransferFromRecordType
+                                        {% elif i.record_type == 4 %}
+                                        WithdrawRecordType
+                                        {% elif i.record_type == 7 %}
+                                        ASKOrderRecordType
+                                        {% elif i.record_type == 8 %}
+                                        BIDOrderRecordType
+                                        {% endif %}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="">
+                                    <div>
+                                        User Accounts
+                                        {% for i in userAccounts %}
+                                        <br />
+                                        user public address: <a href="/user/{{i.stark_key}}">{{i.stark_key}}</a> <br />
+                                        {% endfor %}
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
 
 
 
@@ -86,9 +541,9 @@
 
 
 
-    <div>
+                    <div>
 
-    </div>
+                    </div>
 
 </body>
 
