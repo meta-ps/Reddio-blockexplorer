@@ -18,3 +18,25 @@ Script for Forking devnet live data
 <a href="https://github.com/meta-ps/Reddio-blockexplorer/blob/ff39fd948f1617c0d9dded20edf09ee85665ba9c/test_data.py#L236
 ">Link</a>
 </li>
+
+## Clone this repo
+
+```bash
+git clone https://github.com/meta-ps/Reddio-blockexplorer.git
+```
+
+### Run
+
+Make sure you have `python` and `Django` install then run
+
+```python
+pip install django
+pip install django-unixtimestampfield
+python manage.py makemigrations reddio
+python manage.py migrate
+python manage.py runserver
+```
+## Clean Installation and data
+```python
+python test_data.py
+```
